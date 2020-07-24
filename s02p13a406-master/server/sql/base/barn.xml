@@ -1,0 +1,62 @@
+<!-- /server/sql/base/barn.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BARN">
+	<select id="selectbarn">
+		SELECT
+<<<<<<< HEAD
+		*, concat(substring(time,12,2),substring(time,15,2)) as t
+=======
+		*, concat(substring(time,12,2), substring(time,15,2)) as t
+>>>>>>> dee2c0a0992f55882de34ca2863569e7c2aac2e2
+		FROM
+		ptj_sub1.barns
+		WHERE b_id = #{b_id} and year(time) =#{year} 
+		and month(time) =#{month} and day(time) =#{day}
+		order by time;
+	</select>
+	<select id="selectmember">
+		SELECT
+		b_id
+		FROM
+		ptj_sub1.mb
+		WHERE m_id = #{m_id}
+		order by b_id
+	</select>
+    <select id="allbarn">
+		SELECT
+		*
+		FROM
+		ptj_sub1.barns
+	</select>
+	<insert id="insertbarn">
+		INSERT INTO ptj_sub1.barns
+		(
+		b_id,
+		m_id
+		)
+		VALUES
+		(
+		#{b_id},
+		#{m_id}
+		);
+	</insert>
+    <delete id = "deletebarn">
+        DELETE
+        FROM ptj_sub1.barns
+        WHERE b_id =#{b_id}
+    </delete>
+    <update id ="updatebarn">
+        UPDATE ptj_sub1.barns
+        SET temperature =#{temperature}, humidity=#{humidity}, ch4=#{ch4}, co2 =#{co2}
+        WHERE b_id =#{b_id}
+    </update>
+    <update id ="updatecount">
+        UPDATE ptj_sub1.mb
+        SET count = count+1
+        WHERE b_id =#{b_id}
+    </update>
+	<select id = "selcount">
+	select count from ptj_sub1.mb where b_id =#{b_id}
+	</select>
+</mapper>

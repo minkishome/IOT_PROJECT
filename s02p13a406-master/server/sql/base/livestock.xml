@@ -1,0 +1,72 @@
+<!-- /server/sql/base/livestock.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="livestock">
+	<select id="selectlivestock">
+		SELECT
+<<<<<<< HEAD
+		*, concat(substring(time,12,2),substring(time,15,2)) as t
+=======
+		*, concat(substring(time,12,2), substring(time,15,2)) as t
+>>>>>>> dee2c0a0992f55882de34ca2863569e7c2aac2e2
+		FROM
+		ptj_sub1.livestock
+		WHERE ls_id = #{ls_id} and year(time) =#{year} 
+		and month(time) =#{month} and day(time) =#{day}
+		order by time;
+	</select>
+
+	<select id="selectlivestock2">
+		SELECT
+		*
+		FROM
+		ptj_sub1.livestock
+		WHERE m_id = #{m_id}
+		order by ls_id
+	</select>
+
+	<select id="selectlivestock3">
+		SELECT
+		ls_id
+		FROM
+		ptj_sub1.barn_livestock
+		WHERE b_id = #{b_id}
+		order by ls_id
+	</select>
+	<select id ="selkinds">
+	select kinds FROM ptj_sub1.barn_livestock
+	WHERE ls_id =#{ls_id}
+	</select>
+    <select id="alllivestock">
+		SELECT
+		*
+		FROM
+		ptj_sub1.livestock
+	</select>
+	<insert id="insertlivestock">
+		INSERT INTO ptj_sub1.livestock
+		(
+		ls_id,
+		m_id,
+		b_id,
+		kinds
+		)
+		VALUES
+		(
+		#{ls_id},
+		#{m_id},
+		#{b_id},
+		#{kinds}
+		);
+	</insert>
+    <delete id = "deletelivestock">
+        DELETE
+        FROM ptj_sub1.livestock
+        WHERE ls_id =#{ls_id}
+    </delete>
+    <update id ="updatelivestock">
+        UPDATE ptj_sub1.livestock
+        SET body_temperature =#{body_temperature}, heart_rate=#{heart_rate}, step_count=#{step_count}
+        WHERE ls_id =#{ls_id}
+    </update>
+</mapper>

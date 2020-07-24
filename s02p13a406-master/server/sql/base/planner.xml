@@ -1,0 +1,46 @@
+<!-- /server/sql/base/planner.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="planner">
+	<select id="selectplanner">
+		SELECT
+		*
+		FROM
+		ptj_sub1.planners
+		WHERE p_id = #{p_id}
+	</select>
+    	<select id="allplanner">
+		SELECT
+		*
+		FROM
+		ptj_sub1.planners
+	</select>
+	<insert id="insertplanner">
+		INSERT INTO ptj_sub1.planners
+		(
+        m_id,
+		start_date,
+        end_date,
+        title,
+        info
+		)
+		VALUES
+		(
+        #{m_id},
+		#{start_date},
+        #{end_date},
+        #{title},
+        #{info}
+		);
+	</insert>
+    <delete id = "deleteplanner">
+        DELETE
+        FROM ptj_sub1.planners
+        WHERE p_id =#{p_id}
+    </delete>
+    <update id ="updateplanner">
+        UPDATE ptj_sub1.planners
+        SET start_date =#{start_date}, end_date=#{end_date}, title=#{title}, info=#{info}
+        WHERE p_id =#{p_id}
+    </update>
+</mapper>

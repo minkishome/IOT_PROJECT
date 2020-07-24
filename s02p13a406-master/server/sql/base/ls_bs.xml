@@ -1,0 +1,79 @@
+<!-- /server/sql/base/ls_bs.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LS_BS">
+	<select id="selectb">
+		SELECT
+		*
+		FROM
+		ptj_sub1.ls_bs
+		WHERE b_id = #{b_id}
+	</select>
+	<select id="selectm">
+		SELECT
+		*
+		FROM
+		ptj_sub1.ls_bs
+		WHERE m_id = #{m_id}
+	</select>
+	<select id="selecta">
+		SELECT
+		*
+		FROM
+		ptj_sub1.ls_bs
+		WHERE ls_id =#{ls_id}
+	</select>
+	<select id="selectm">
+		SELECT
+		*
+		FROM
+		ptj_sub1.ls_bs
+		WHERE m_id =#{m_id}
+	</select>
+    <select id="all">
+		SELECT
+		*
+		FROM
+		ptj_sub1.ls_bs
+	</select>
+	<insert id="insertls_bs">
+		INSERT INTO ptj_sub1.ls_bs
+		(
+		ls_id,
+        b_id,
+		m_id,
+        location,
+		gender,
+		pregnancy
+		)
+		VALUES
+		(
+		#{ls_id},
+        #{b_id},
+		#{m_id},
+        #{location},
+		#{gender},
+		#{pregnancy}
+		);
+	</insert>
+    <delete id = "deletels_bs">
+        DELETE
+        FROM ptj_sub1.ls_bs
+        WHERE ls_id =#{ls_id}
+    </delete>
+	<delete id = "deletebarn_livestock">
+        DELETE
+        FROM ptj_sub1.ls_bs
+        WHERE b_id =#{b_id}
+    </delete>
+	<delete id = "delete_member_livestorck">
+        DELETE
+        FROM ptj_sub1.ls_bs
+        WHERE m_id =#{m_id}
+    </delete>
+    <update id ="updatels_bs">
+        UPDATE ptj_sub1.ls_bs
+        SET location =#{location}, gender =#{gender}, pregnancy =#{pregnancy}
+       WHERE ls_id =#{ls_id}
+    </update>
+</mapper>

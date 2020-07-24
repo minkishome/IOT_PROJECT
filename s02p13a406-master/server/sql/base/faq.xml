@@ -1,0 +1,40 @@
+<!-- /server/sql/base/faq.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="faq">
+	<select id="selectfaq">
+		SELECT
+		*
+		FROM
+		ptj_sub1.faqs
+		WHERE q_id =#{q_id}
+	</select>
+    <select id="allfaq">
+		SELECT
+		*
+		FROM
+		ptj_sub1.faqs
+	</select>
+	<insert id="insertfaq">
+		INSERT INTO ptj_sub1.faqs
+		(
+        title,
+        content
+		)
+		VALUES
+		(
+        #{title},
+        #{content}
+		);
+	</insert>
+    <delete id = "deletefaq">
+        DELETE
+        FROM ptj_sub1.faqs
+        WHERE q_id =#{q_id}
+    </delete>
+    <update id ="updatefaq">
+        UPDATE ptj_sub1.faqs
+        SET title =#{title}, content =#{content}
+        WHERE q_id =#{q_id}
+    </update>
+</mapper>

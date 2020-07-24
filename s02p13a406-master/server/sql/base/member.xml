@@ -1,0 +1,59 @@
+<!-- /server/sql/base/member.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MEMBER">
+	<select id="selectmember">
+		SELECT
+		*
+		FROM
+		ptj_sub1.members
+		WHERE m_id = #{m_id}
+	</select>
+	<select id = "pwmember">
+	SELECT pw FROM ptj_sub1.members WHERE m_id = #{m_id}
+	</select>
+    <select id="allmember">
+		SELECT
+		*
+		FROM
+		ptj_sub1.members
+	</select>
+	<insert id="insertmember">
+		INSERT INTO ptj_sub1.members
+		(
+		m_id,
+		email,
+        pw,
+        name,
+        location
+		)
+		VALUES
+		(
+		#{m_id},
+		#{email},
+        #{pw},
+        #{name},
+        #{location}
+		);
+	</insert>
+    <delete id = "deletemember">
+        DELETE
+        FROM ptj_sub1.members
+        WHERE m_id =#{m_id}
+    </delete>
+    <update id ="updatemember">
+        UPDATE ptj_sub1.members
+        SET email =#{email}, pw=#{pw}, name=#{name}, location=#{location}
+        WHERE m_id =#{m_id}
+    </update>
+	<update id ="bcntupdate">
+		UPDATE ptj_sub1.members
+		SET bcnt = bcnt+1
+		WHERE m_id =#{m_id}
+	</update>
+	<update id = "bcntminus">
+	update ptj_sub1.members 
+	set bcnt = if(bcnt > 0, bcnt-1, 0) 
+	where m_id = ( select m_id from barn where b_id =#{b_id} );
+	</update>
+</mapper>

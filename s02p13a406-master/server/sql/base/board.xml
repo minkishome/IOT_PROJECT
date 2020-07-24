@@ -1,0 +1,100 @@
+<!-- /server/sql/base/board.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+<sql id="search">
+ <if test="searchType != null" > 
+   <if test="searchType == 'title'">
+     and title like CONCAT('%', #{keyword}, '%')
+   </if>
+   <if test="searchType == 'text'">
+     and text like CONCAT('%', #{keyword}, '%')
+   </if>
+   <if test="searchType == 'user'">
+     and m_id like CONCAT('%', #{keyword}, '%')
+   </if>     
+   <if test="searchType == 'title_text'">
+     and ( title like CONCAT('%', #{keyword}, '%') OR text like CONCAT('%', #{keyword}, '%'))
+   </if>        
+   <if test="searchType == 'all'">
+     and ( text like CONCAT('%', #{keyword}, '%') OR m_id like CONCAT('%', #{keyword}, '%') OR title like CONCAT('%', #{keyword}, '%'))
+   </if>                     
+ </if>  
+</sql>
+
+    <select id ="idx">
+    select max(bno) as bno from ptj_sub1.boards
+    </select>
+   
+	<select id="selectboard">
+		SELECT
+	    *
+		FROM
+		ptj_sub1.boards
+		WHERE bno =#{bno}
+	</select>
+    <select id="allboard">
+  SELECT
+		*
+		FROM
+		ptj_sub1.boards 
+   where bno > 0
+ <include refid="search"></include>   
+ order by bno desc
+    limit ${no}, 10
+	</select>
+ <select id="tempboard">
+  SELECT
+		count(*) as tcnt
+		FROM
+		ptj_sub1.boards 
+   where bno > 0
+ <include refid="search"></include>   
+	</select>
+
+	<insert id="insertboard">
+		INSERT INTO ptj_sub1.boards
+		(
+		m_id,
+        title,
+        content,
+        regdate,
+        text
+		)
+		VALUES
+		(
+		#{m_id},
+        #{title},
+        #{content},
+       now(),
+       #{text}
+		);
+	</insert>
+    <delete id = "deleteboard">
+        DELETE
+        FROM ptj_sub1.boards
+        WHERE bno =#{bno} and m_id =#{m_id}
+    </delete>
+    <update id ="updateboard">
+        UPDATE ptj_sub1.boards
+        SET title =#{title}, content=#{content}, text =#{text}
+        WHERE bno =#{bno}
+    </update>
+    <update id = "viewcntupdate">
+        UPDATE ptj_sub1.boards
+        SET viewcnt = viewcnt+1
+        WHERE bno =#{bno}
+    </update>
+     <update id = "replycnt">
+        UPDATE ptj_sub1.boards
+        SET replycnt = replycnt+1
+        WHERE bno =#{bno}
+    </update>
+
+  <update id ="initialrcnt">
+		  UPDATE ptj_sub1.boards
+	  	SET replycnt = (select count(*) FROM replies WHERE bno =#{bno})
+	  	where bno =#{bno}
+	</update>
+</mapper>
